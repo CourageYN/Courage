@@ -1,35 +1,32 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+# -*- coding:utf-8 -*-
+
+
 
 import smtplib
+from email.mime.text import MIMEText
+from email.header import Header
 
-def sendMail(body):
-    smtp_server = 'smtp.163.com'
-    from_mail = 'ynwangbiu@163.com'
-    mail_pass = 'xxx'
-    to_mail = ['876447556@qq.com']
-    cc_mail = ['yaniray@yeah.com']
-    from_name = 'monitor'
-    subject = u'测试测试'.encode('gbk')   # 以gbk编码发送，一般邮件客户端都能识别
+# 第三方 SMTP 服务
+mail_host = "smtp.qq.com"  # 设置服务器
+mail_user = "876447556@qq.com"  # 发件人用户名
+mail_pass = "jejnzpmmtsjbbedb"  # 发件人口令,QQ邮箱是输入授权码,在qq邮箱设置里用验证过的手机发送短信获得,不含空格
 
+sender = '876447556@qq.com'  # 与发件人用户名保持一致
+receivers = "ynwangbiu@163.com"  # 收件人邮箱地址，可设置为你的QQ邮箱或者其他邮箱
 
+message = MIMEText('内容', 'plain', 'utf-8')
+message['From'] = Header("发件人", 'utf-8')
+message['To'] = Header("you", 'utf-8')
 
-    mail = [
-        "From: %s <%s>" % (from_name, from_mail),
-        "To: %s" % ','.join(to_mail),   # 转成字符串，以逗号分隔元素
-        "Subject: %s" % subject,
-        "Cc: %s" % ','.join(cc_mail),
-        "",
-        body
-        ]
-    msg = '\n'.join(mail)  #
-    try:
-        s = smtplib.SMTP()
-        s.connect(smtp_server, '25')
-        s.login(from_mail, mail_pass)
-        s.sendmail(from_mail, to_mail+cc_mail, msg)
-        s.quit()
-    except smtplib.SMTPException as e:
-        print "Error: %s" %e
-if __name__ == "__main__":
-    sendMail("This is a test!")
+subject = '标题'
+message['Subject'] = Header(subject, 'utf-8')
+
+try:
+    smtpObj = smtplib.SMTP_SSL(mail_host, 465)
+    smtpObj.login(mail_user, mail_pass)
+    smtpObj.sendmail(sender, receivers, message.as_string())
+    smtpObj.quit()
+    print u"邮件发送成功"
+except smtplib.SMTPException, e:
+        print e
+
