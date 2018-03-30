@@ -9,10 +9,10 @@ from email.header import Header
 # 第三方 SMTP 服务
 mail_host = "smtp.qq.com"  # 设置服务器
 mail_user = "876447556@qq.com"  # 发件人用户名
-mail_pass = "jejnzpmmtsjbbedb"  # 发件人口令,QQ邮箱是输入授权码,在qq邮箱设置里用验证过的手机发送短信获得,不含空格
+mail_pass = "jejnzpmmtsjbbedb"  # 发件人口令
 
-sender = '876447556@qq.com'  # 与发件人用户名保持一致
-receivers = "ynwangbiu@163.com"  # 收件人邮箱地址，可设置为你的QQ邮箱或者其他邮箱
+sender = '876447556@qq.com'
+receivers = "ynwangbiu@163.com"
 
 message = MIMEText('内容', 'plain', 'utf-8')
 message['From'] = Header("发件人", 'utf-8')
